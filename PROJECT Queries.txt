@@ -1,0 +1,107 @@
+create table User_Master ( User_Id VARCHAR2(10) PRIMARY KEY, User_Name VARCHAR2(20), User_Password VARCHAR2(20) , User_Type VARCHAR2(20)); 
+
+
+
+create table Employee( Emp_ID VARCHAR2(6) PRIMARY KEY, Emp_First_Name VARCHAR2(25), Emp_Last_Name VARCHAR2(25),
+ Emp_DOB DATE, Emp_DOJ DATE, Emp_Dept_ID NUMBER(15) REFERENCES Department(Dept_Id),
+ Emp_Grade VARCHAR2(2) REFERENCES Grade_Master(Grade_Code), Emp_Designation VARCHAR2(50), 
+Emp_Basic NUMBER(15), Emp_Gender VARCHAR2(1), Emp_Marital_Status VARCHAR2(1), Emp_Home_Address VARCHAR2(100), Emp_Contact_Num VARCHAR2(15));
+
+
+
+create table Grade_Master( Grade_Code VARCHAR2(2) PRIMARY KEY, Description VARCHAR2(10), Min_Salary NUMBER(5), Max_Salary NUMBER(7));
+
+create table Department( Dept_ID NUMBER(15) PRIMARY KEY, Dept_Name VARCHAR2(50) );
+
+=======================================================================================================================================================
+
+INSERT INTO User_Master values('&User_Id','&User_Name','&User_Password','&User_Type');
+INSERT INTO Grade_Master values('&Grade_Code','&Description','&Min_Salary','&Max_Salary');
+INSERT INTO Department values('&Dept_ID','&Dept_Name');
+INSERT INTO Employee values('&Emp_ID','&Emp_First_Name','&Emp_Last_Name','&Emp_DOB','&Emp_DOJ','&Emp_Dept_ID',
+'&Emp_Grade','&Emp_Designation','&Emp_Basic','&Emp_Gender','&Emp_Marital_Status','&Emp_Home_Address','&Emp_Contact_Num');
+
+========================================================================================================================================================
+
+
+create table User_Master ( User_Id VARCHAR2(6) PRIMARY KEY, User_Name VARCHAR2(20) NOT NULL, User_Password VARCHAR2(20) NOT NULL , User_Type VARCHAR2(20) NOT NULL); 
+
+
+
+create table Employee( Emp_ID VARCHAR2(6) REFERENCES User_Master(User_Id), Emp_First_Name VARCHAR2(25) NOT NULL, Emp_Last_Name VARCHAR2(25) NOT NULL,
+ Emp_DOB DATE NOT NULL, Emp_DOJ DATE NOT NULL, Emp_Dept_ID NUMBER(15) REFERENCES Department(Dept_Id),
+ Emp_Grade VARCHAR2(2) REFERENCES Grade_Master(Grade_Code), Emp_Designation VARCHAR2(50) NOT NULL, 
+Emp_Basic NUMBER(9,2) NOT NULL, Emp_Gender VARCHAR2(10)  CONSTRAINT chk1 check(Emp_Gender IN('M','F')), Emp_Marital_Status VARCHAR2(15) 
+ CONSTRAINT chk2 check(Emp_Marital_Status IN('Single','Married','Divorced','Separated','Widowed')),Emp_Home_Address VARCHAR2(100) NOT NULL,
+Emp_Contact_Num VARCHAR2(10) CONSTRAINT chk3 check(REGEXP_LIKE(Emp_Contact_Num, '^0\d{9}|\d{10}$')));
+
+
+
+create table Grade_Master( Grade_Code VARCHAR2(2) PRIMARY KEY, Description VARCHAR2(10) , Min_Salary NUMBER(9,2) NOT NULL, Max_Salary NUMBER(9,2) NOT NULL);
+
+create table Department( Dept_ID NUMBER(15) PRIMARY KEY, Dept_Name VARCHAR2(50) NOT NULL );
+
+=======================================================================================================================================================
+
+INSERT INTO  User_Master values(123001,'bindhu','Qwerty@111','Admin');
+INSERT INTO  User_Master values(123002,'prakash','Abcde@123','employee');
+INSERT INTO  User_Master values(123003,'thribhuvan','Abcde@555','employee');
+INSERT INTO  User_Master values(123004,'vikas','Abcde@456','employee');
+INSERT INTO  User_Master values(123005,'Vamshidhar Reddy','Qwerty@321','employee');
+INSERT INTO  User_Master values(123006,'srinivas','Buddy#222','employee');
+INSERT INTO  User_Master values(123007,'chandra','cherry@235','employee');
+INSERT INTO  User_Master values(123008,'Omkar','fasak@920','employee');
+INSERT INTO  User_Master values(123009,'vaishali','harry@123','employee');
+INSERT INTO  User_Master values(123010,'Srivastav','peter@333','employee');
+
+
+INSERT INTO  Grade_Master values('M1','LEVEL1',200001,600000);
+INSERT INTO  Grade_Master values('M2','LEVEL2',100001,200000);
+INSERT INTO  Grade_Master values('M3','LEVEL3',55001,100000);
+INSERT INTO  Grade_Master values('M4','LEVEL4',45001,55000);
+INSERT INTO  Grade_Master values('M5','LEVEL5',35001,45000);
+INSERT INTO  Grade_Master values('M6','LEVEL6',20001,35000);
+INSERT INTO  Grade_Master values('M7','LEVEL7',5000,20000);
+
+
+INSERT INTO  Department values(1001,'Production');
+INSERT INTO  Department values(1002,'Testing');
+INSERT INTO  Department values(1003,'R and D');
+INSERT INTO  Department values(1004,'Managment');
+INSERT INTO  Department values(1005,'security');
+INSERT INTO  Department values(1006,'transport');
+INSERT INTO  Department values(1007,'Finance and Accounts');
+INSERT INTO  Department values(1008,'Marketing');
+INSERT INTO  Department values(1009,'Human Resource');
+INSERT INTO  Department values(1010,'IT Department');
+
+
+
+INSERT INTO  Employee values(123001,'bindhu','kalavala','20-NOV-1996','12-DEC-2018',1001,'M5','Production',36000,'F','Single','Guntur',9989327293);
+
+INSERT INTO  Employee values(123002,'prakash','Reddy','26-NOV-1995','12-DEC-2008',1010,'M6','IT Department',27000,'M','Single','Hyderabad',9989327293);
+
+INSERT INTO  Employee values(123003,'thribhuvan','kotha','02-JUL-1995','12-AUG-2017',1004,'M1','Managment',250000,'M','Single','Bheemavaram',9989327293);
+
+INSERT INTO  Employee values(123004,'vikas','Tillapudi','17-JUN-1990','21-FEB-2014',1003,'M2','R and D',190000,'M','Single','Rajahmahendravaram',9989327293);
+
+INSERT INTO  Employee values(123005,'Vamshidhar','Reddy','05-APR-1997','12-DEC-2017',1009,'M3','Human Resource',65000,'M','Single','Hyderabad',9989327293);
+
+INSERT INTO  Employee values(123006,'srinivas','Upputuri','20-DEC-1996','12-DEC-2018',1007,'M3','Finance and Accounts',85000,'M','Single','warangal',9989327293);
+
+INSERT INTO  Employee values(123007,'chandra shekshar','Reddy','22-JAN-1996','12-DEC-2018',1001,'M5','Production',36000,'M','Single','Ongole',9989327293);
+
+INSERT INTO  Employee values(123008,'Gayathri','kakumanu','20-NOV-1990','12-DEC-2012',1009,'M3','Human  Resource',64000,'F','Married','Bangalore',9989327293);
+
+INSERT INTO  Employee values(123009,'vaishali','Thota','20-JAN-1997','12-DEC-2008',1002,'M6','Testing',32000,'F','Married','Pune',9989327293);
+
+INSERT INTO  Employee values(123010,'Srivastav','kamma','20-MAR-1989','12-DEC-2006',1008,'M5','Marketing',42000,'M','Married','Mumbai',9989327293);
+
+
+
+create sequence Employee_Id_Seq start with 123011;
+
+
+
+INSERT INTO Employee values(Employee_Id_Seq.nextval,'&Emp_First_Name','&Emp_Last_Name','&Emp_DOB','&Emp_DOJ','&Emp_Dept_ID',
+'&Emp_Grade','&Emp_Designation','&Emp_Basic','&Emp_Gender','&Emp_Marital_Status','&Emp_Home_Address','&Emp_Contact_Num');
